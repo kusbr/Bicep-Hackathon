@@ -3,14 +3,14 @@ targetScope = 'subscription'
 
 // Parameters
 @description('Resource group name')
-param name string
+param name string = 'testrg'
 
 @description('Azure region name')
 param location string
 
 @description('Tags')
 param tags object =   {
-    'testtag': 'testvalue'
+    // Tip: Add tags as multiple name value pairs in different lines
   }
 
 
@@ -18,7 +18,7 @@ param tags object =   {
 resource rg 'Microsoft.Resources/resourceGroups@2021-04-01' = {
   location: location
   name: name
-  tags: tags
+  // Tip: set the tags 
 }
 
 

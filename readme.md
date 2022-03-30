@@ -31,6 +31,7 @@ Each exercise has the following template that you can follow in order to complet
 
 1. Bicep file to be used
 2. Steps - changes to be done in the bicep file
+3. References: links to bicep concepts used
 3. Command - az cli command to submit the bicep
 4. Outputs - check the resource[s] provisioned by the command
 5. Key Points - Bicep concepts used in the exercise
@@ -50,6 +51,12 @@ Steps:
 3. Set the resource type to 'Microsoft.Resources/resourceGroups@2021-04-01'
 4. Pass the location parameters to the resource
 
+References:
+- [VSCode bicep resource snippet](https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/quickstart-create-bicep-use-visual-studio-code?tabs=CLI#add-resource-snippet)
+- [Bicep file structure](https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/file#bicep-format)
+- [Scope](https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/file#target-scope)
+- [Parameters](https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/parameters)
+
 Command:
 
     az deployment sub create --location 'southindia' --parameters name='testrg' location='centralindia' --template-file .\rg.bicep
@@ -60,25 +67,40 @@ Outputs:
 
 Check if the new resource group is created
 
+Key Points:
+- Bicep scope - note subscription targetScope
+- --location deployment parameter is for the ARM service location
+- location bicep parameter is passed to resource
+- Observe idempotent operation (run command twice)
 
 
 ***
 ## Exercise B: Incremental resource updation -  Add Tags to Resource group
 
-- Use object parameter and pass to the command
-- Incremental update
+Bicep File: **rg-tags.bicep**
+
+Steps:
+1. Add tags (name value pairs) to thetags parameter
+2. Set the tags to the resource
+
+References:
+- Bicep [Object datatype](https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/data-types#objects)
+- Bicep [Idempotent/ Repeatable Results](https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/overview?tabs=bicep#benefits-of-bicep) 
 
 Command:
+
+_Tip: Add a resource like storage account in the RG before executing command
 
     az deployment sub create --location 'southindia' --parameter name='testrg' location='centralindia' tags="{'purpose':'learn', 'event':'MCI-India-AzBicepHackathon-31Mar22'}"  --template-file .\rg-tags.bicep
 
 Output:
-- New resource group provisioned
 
-## 3. Basic Parameters - Create Storage Account and set properties using params
+- Resource group tags added
+- No changes to existing resources
 
-- Parameters, Default values and Attributes
+Key Points:
+- Incremental resource updates (as supported by the resource provider)
 
-Command
+***
 
-    az deployment group create --resource-group testrg --template-file .\3.strgacct.bicep  --parameters accessTier='Hot' kind='StorageV2'
+
