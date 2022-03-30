@@ -276,6 +276,6 @@ Command:
 Output:
 
 - Bastion resource is created with the public IP associated
-- Connect the linux vm with bastion and the provided password
+- Connect the linux vm with bastion and the provided password (default username is mcidev)
 
 ***
