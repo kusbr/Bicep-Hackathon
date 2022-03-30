@@ -29,10 +29,10 @@ In order to complete the exercises in this lab, you need one of these environmen
 
 ### CloudShell Pre-requisites
 
-|# |Prerequisite  | Reference|
+|# |Prerequisite  | Reference| Remarks |
 --- | --- | ---|
-|6| Lab Files cloned to a folder in the CloudShell  | [Github repo](https://github.com/kusbr/)|
-|7| Editor like nano or vi or vim|
+|6| Lab Files cloned to a folder in the CloudShell  | [Github repo](https://github.com/kusbr/)| |
+|7| Editor like nano or vi or vim| VSCode intellisense and ease of dev will be missed|
 
 ### Note:
 
