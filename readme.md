@@ -11,7 +11,13 @@ The objective of this lab is to introduce the basic concepts of how to provision
 
 ## Prerequisites
 
-In order to complete the exercises in this lab, you need a development environment.
+In order to complete the exercises in this lab, you need one of these environments
+
+- Host with bicep environment and VisualStudio Code
+- Cloud Shell
+- Azure Pipelines (not recommended for this lab but surely recommended for projects)
+
+### Host pre-requisites:
 
 |# |Prerequisite  | Reference|
 --- | --- | ---|
@@ -21,9 +27,26 @@ In order to complete the exercises in this lab, you need a development environme
 |4|Bicep extension for VSCode| [Extension](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-bicep)|
 |5| Lab Files cloned locally and folder opened in VisualStudio Code| [Github repo](https://github.com/kusbr/Bicep-Hackathon.git)|
 
-Note:
+### CloudShell Pre-requisites
+
+|# |Prerequisite  | Reference|
+--- | --- | ---|
+|6| Lab Files cloned to a folder in the CloudShell  | [Github repo](https://github.com/kusbr/)|
+|7| Editor like nano or vi or vim|
+
+### Note:
 
 _You can complete the lab by coding the exercises in this document. There is also a ready solution for the lab located under the 'Ready' folder in the lab files._
+
+### Important:
+
+In the environment please double check the Azure subscription against which you will be executing the lab
+
+    az account show
+
+To change subscription
+
+    az account set --subscription {subId or subName}
 
 ## How to complete this lab
 
@@ -32,7 +55,12 @@ Each exercise has the following template that you can follow in order to complet
 1. Bicep file to be used
 2. Steps - changes to be done in the bicep file
 3. References: links to bicep concepts used
-4. Command - az cli command to submit the bicep (to be run within a terminal in the path where the bicep file exists)
+4. Command - az cli command to submit the bicep
+
+        a. Always run the command in the path (. or /Modules) where the bicep file exists
+
+        b. If you intend to use a different resource group name other than the lab default 'testrg', ensure you pass the same to the --resource-group deployment parameter of the command
+
 5. Outputs - check the resource[s] provisioned by the command
 6. Key Points - Bicep concepts used in the exercise
 
@@ -60,7 +88,7 @@ References:
 
 Command:
 
-    az deployment sub create --location 'southindia' --parameters name='testrg' location='centralindia' --template-file .\rg.bicep
+    az deployment sub create --location 'southindia' --parameters name='testrg' location='centralindia' --template-file rg.bicep
 
 _Tip: Pass the --location value different from the location parameter_
 
@@ -95,7 +123,7 @@ Command:
 
 _Tip: Add a resource like storage account in the RG before executing command
 
-    az deployment sub create --location 'southindia' --parameter name='testrg' location='centralindia' tags="{'purpose':'learn', 'event':'MCI-India-AzBicepHackathon-31Mar22'}"  --template-file .\rg-tags.bicep
+    az deployment sub create --location 'southindia' --parameter name='testrg' location='centralindia' tags="{'purpose':'learn', 'event':'MCI-India-AzBicepHackathon-31Mar22'}"  --template-file rg-tags.bicep
 
 Output:
 
@@ -132,7 +160,7 @@ References:
 
 Command:
 
-    az deployment group create --resource-group testrg --template-file  .\1.vnet.bicep
+    az deployment group create --resource-group testrg --template-file  1.vnet.bicep
 
 Output:
 
@@ -161,7 +189,7 @@ References:
 
 Command:
 
-    az deployment group create --resource-group testrg --template-file  .\2.nsg.bicep
+    az deployment group create --resource-group testrg --template-file  2.nsg.bicep
 
 Output:
 
@@ -211,7 +239,7 @@ References:
 
 Command:
 
-    az deployment group create --resource-group testrg --template-file  .\lab.bicep
+    az deployment group create --resource-group testrg --template-file  lab.bicep
 
 _You will be prompted to enter adminPassword. Provide a suitable strong pasword per Azure guidelines_
 
@@ -241,9 +269,9 @@ Steps:
 
 Command:
 
-    az deployment group create --resource-group testrg --template-file  .\5.publicIP.bicep
+    az deployment group create --resource-group testrg --template-file  5.publicIP.bicep
 
-    az deployment group create --resource-group testrg --template-file  .\6.bastion.bicep
+    az deployment group create --resource-group testrg --template-file  6.bastion.bicep
 
 Output:
 
