@@ -27,7 +27,7 @@ resource mainSubnet 'Microsoft.Network/virtualnetworks/subnets@2015-06-15' exist
 }
 
 // Existing Network Security Group
-resource nsg 'Microsoft.Network/networkSecurityGroups@2021-05-01' = {
+resource nsg 'Microsoft.Network/networkSecurityGroups@2021-05-01' existing = {
   name: '${resourceGroup().name}-nsg'
   location: location
 }
