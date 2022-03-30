@@ -188,7 +188,7 @@ Command:
 
 Output:
 
-- NIC resource is created and associated with the NSG
+- NIC resource is created and associated with the referenced NSG and Subnet
 
 ***
 
