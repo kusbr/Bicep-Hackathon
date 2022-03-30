@@ -164,7 +164,7 @@ Output:
 
 ***
 
-## Exercise E: Modules to provision NIC and VM
+## Exercise E: Modules to provision NIC
 
 Bicep File: **Exercises/lab.bicep**
 
@@ -184,7 +184,7 @@ References:
 
 Command:
 
-    az deployment group create --resource-group testrg --template-file  .\2.nsg.bicep
+    az deployment group create --resource-group testrg --template-file  .\lab.bicep
 
 Output:
 
