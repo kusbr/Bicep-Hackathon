@@ -61,6 +61,8 @@ Each exercise has the following template that you can follow in order to complet
 
         b. If you intend to use a different resource group name other than the lab default 'testrg', ensure you pass the same to the --resource-group deployment parameter of the command
 
+        c. VSCode terminal preferable on host environment 
+
 5. Outputs - check the resource[s] provisioned by the command
 6. Key Points - Bicep concepts used in the exercise
 
