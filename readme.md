@@ -143,7 +143,7 @@ Key Points:
 
 ## Exercise D: Network Security Group
 
-Bicep File: **Exercises/Modules/2.nsg.rg**
+Bicep File: **Exercises/Modules/2.nsg.bicep**
 
 Steps:
 
@@ -162,7 +162,33 @@ Output:
 
 - NSG resource is created with the security rule to allow SSH port for the VNET address space
 
+***
 
+## Exercise E: Modules to provision NIC and VM
+
+Bicep File: **Exercises/lab.bicep**
+
+Steps:
+
+1. Complete the Bicep code to reference the NSG resource created in the previous exercise (use the [existing](https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/existing-resource) keyword and the NSG resource name)
+2. Add Bicep code to use the NIC resource defined in the NIC module
+('Modules/3.nic.bicep')
+3. Set the module properties nsgId and subnetId to the corresponding ids (existing resource implicit references)
+4. Observe the use of [uniqueString()](https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/bicep-functions-string#uniquestring) bicep function to create a deployment name
+5. Observe use of module name [string interpolation](https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/data-types#strings) to build strings from vars, params, resource properties and other functions
+
+References:
+- [Bicep Modules](https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/modules)
+- [Resource dependencies in Bicep](https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/resource-dependencies)
+- Bicep [Datatypes](https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/data-types), [Functions](https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/bicep-functions) and [Operators](https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/operators)
+
+Command:
+
+    az deployment group create --resource-group testrg --template-file  .\2.nsg.bicep
+
+Output:
+
+- NIC resource is created and associated with the NSG
 
 ***
 
