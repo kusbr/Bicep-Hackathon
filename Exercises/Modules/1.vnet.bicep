@@ -22,20 +22,16 @@ param location string = resourceGroup().location
 
 // Resource: Virtual Network
 resource vnet 'Microsoft.Network/virtualNetworks@2021-05-01' = {
+  //Tip: Add the VNET resource related  properties like subnets
+  
   name: vnetName
   location: location
+
   properties: {
-    addressSpace: {
-      addressPrefixes: [
-        vnetAddressPrefixes
-      ]
-    }
-    subnets: [for subnet in subnets: {
-      name: subnet.name
-      properties: {
-        addressPrefix: subnet.subnetPrefix
-      }
-    }]
+    
+    //Tip: Add addressSpace
+
+    //Tip: Add subnets (requires 'for' loop)
   }
 }
 
@@ -43,4 +39,4 @@ resource vnet 'Microsoft.Network/virtualNetworks@2021-05-01' = {
 output resource object = vnet
 output name string = vnet.name
 output id string = vnet.id
-output subnetid string = vnet.properties.subnets[0].id  
+output subnetid string =       //Tip: Set the value to the resource id of the first subnet

@@ -32,9 +32,9 @@ Each exercise has the following template that you can follow in order to complet
 1. Bicep file to be used
 2. Steps - changes to be done in the bicep file
 3. References: links to bicep concepts used
-3. Command - az cli command to submit the bicep
-4. Outputs - check the resource[s] provisioned by the command
-5. Key Points - Bicep concepts used in the exercise
+4. Command - az cli command to submit the bicep (to be run within a terminal in the path where the bicep file exists)
+5. Outputs - check the resource[s] provisioned by the command
+6. Key Points - Bicep concepts used in the exercise
 
 _In the bicep files for the exercises, you can refer the "TIP:" comment to complete the required steps._
 
@@ -42,7 +42,7 @@ _In the bicep files for the exercises, you can refer the "TIP:" comment to compl
 
 ## Exercise A: Basic Deployment (Provision a new ResourceGroup)
 
-Bicep File: **rg.bicep**
+Bicep File: **Exercises/rg.bicep**
 
 Steps:
 
@@ -77,7 +77,7 @@ Key Points:
 ***
 ## Exercise B: Incremental resource updation -  Add Tags to Resource group
 
-Bicep File: **rg-tags.bicep**
+Bicep File: **Exercises/rg-tags.bicep**
 
 Steps:
 1. Add tags (name value pairs) to thetags parameter
@@ -100,6 +100,69 @@ Output:
 
 Key Points:
 - Incremental resource updates (as supported by the resource provider)
+
+***
+
+Note:
+_ You will now proceed to provision a Linux VM by following the remaining exercises
+
+# Provisioning a Linux Virtual machine
+
+## Exercise C: Virtual Network
+
+Bicep File: **Exercises/Modules/1.vnet.rg**
+
+Steps:
+
+1. Add addressSpace under VNET resource properties
+2. Add subnets under VNET resource properties
+3. Set subnetid output value
+
+References:
+
+- VNET [Properties](https://docs.microsoft.com/en-us/azure/templates/microsoft.network/virtualnetworks?tabs=bicep#virtualnetworkpropertiesformat)
+- VNET [AddressSpace](https://docs.microsoft.com/en-us/azure/templates/microsoft.network/virtualnetworks?tabs=bicep#addressspace)
+- VNET Subnets - array of [subnet](https://docs.microsoft.com/en-us/azure/templates/microsoft.network/virtualnetworks?tabs=bicep#subnet)
+- Bicep [loop an array using 'for'](https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/loops#array-elements)
+
+Command:
+
+    az deployment group create --resource-group testrg --template-file  .\1.vnet.bicep
+
+Output:
+
+- VNET resource is created with two subnets and specified address space
+
+Key Points:
+
+- Use of resource group scope in the command
+- Virtual network resource template
+- Bicep for loop
+
+***
+
+## Exercise D: Network Security Group
+
+Bicep File: **Exercises/Modules/2.nsg.rg**
+
+Steps:
+
+1. No changes to the bicep file
+2. Observe the security rules property for the NSG
+
+References:
+
+- [NSG resource template format](https://docs.microsoft.com/en-us/azure/templates/microsoft.network/networksecuritygroups/securityrules?tabs=bicep#template-format)
+
+Command:
+
+    az deployment group create --resource-group testrg --template-file  .\2.nsg.bicep
+
+Output:
+
+- NSG resource is created with the security rule to allow SSH port for the VNET address space
+
+
 
 ***
 
