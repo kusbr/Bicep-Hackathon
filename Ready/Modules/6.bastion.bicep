@@ -2,7 +2,7 @@
 // Parameters
 
 @description('Virtual network for the BastionHost association')
-param vnetName string 
+param vnetName string = '${resourceGroup().name}-vnet'
 
 @description('PublicIp resource id for the BastionHost')
 param publicIpId string

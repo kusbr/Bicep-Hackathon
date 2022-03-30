@@ -2,10 +2,7 @@
 // Parameters
 
 @description('Virtual network for the BastionHost association')
-param vnetName string 
-
-@description('PublicIp resource id for the BastionHost')
-param publicIpId string
+param vnetName string = '${resourceGroup().name}-vnet'
 
 @description('Azure region for the BastionHost')
 param location string = resourceGroup().location
@@ -19,6 +16,11 @@ resource vnet 'Microsoft.Network/virtualNetworks@2021-05-01' existing = {
 resource bastionSubnet 'Microsoft.Network/virtualNetworks/subnets@2021-05-01' existing = {
   parent: vnet
   name: 'AzureBastionSubnet'
+}
+
+// public IP ref
+resource pubIp 'Microsoft.Network/publicIPAddresses@2021-05-01' existing = {
+  name: '${resourceGroup().name}-bastion-pubip'
 }
 
 // Resource: Azure Bastion Host
@@ -37,7 +39,7 @@ resource bastion 'Microsoft.Network/bastionHosts@2021-05-01' = {
             id: bastionSubnet.id
           }
           publicIPAddress: {
-            id: publicIpId
+            id: pubIp.id
           }
           privateIPAllocationMethod: 'Dynamic'
         }

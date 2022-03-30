@@ -1,7 +1,7 @@
 // Parameters
 
 
-@description('Azure region where the PIP should be created')
+@description('Azure region where the PubIP should be created')
 param location string = resourceGroup().location
 
 @description('Sku')
@@ -9,7 +9,7 @@ param location string = resourceGroup().location
   'Basic'
   'Standard'
 ])
-param sku string = 'Basic'
+param sku string = 'Standard'
 
 // Variables
 var requireStaticAllocation = sku == 'Standard'    // needed for standard sku

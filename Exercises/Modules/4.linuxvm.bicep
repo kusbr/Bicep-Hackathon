@@ -50,7 +50,7 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2020-12-01' = {
       adminUsername: adminUserName
       adminPassword: adminPassword
       linuxConfiguration:{ 
-        disablePasswordAuthentication: false
+                            // TIP: Add disablePasswordAuthentication and set it to false
       }
     }
 

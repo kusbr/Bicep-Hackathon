@@ -52,6 +52,7 @@ Steps:
 4. Pass the location parameters to the resource
 
 References:
+
 - [VSCode bicep resource snippet](https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/quickstart-create-bicep-use-visual-studio-code?tabs=CLI#add-resource-snippet)
 - [Bicep file structure](https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/file#bicep-format)
 - [Scope](https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/file#target-scope)
@@ -68,24 +69,27 @@ Outputs:
 Check if the new resource group is created
 
 Key Points:
+
 - Bicep scope - note subscription targetScope
 - --location deployment parameter is for the ARM service location
 - location bicep parameter is passed to resource
 - Observe idempotent operation (run command twice)
 
-
 ***
+
 ## Exercise B: Incremental resource updation -  Add Tags to Resource group
 
 Bicep File: **Exercises/rg-tags.bicep**
 
 Steps:
+
 1. Add tags (name value pairs) to thetags parameter
 2. Set the tags to the resource
 
 References:
+
 - Bicep [Object datatype](https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/data-types#objects)
-- Bicep [Idempotent/ Repeatable Results](https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/overview?tabs=bicep#benefits-of-bicep) 
+- Bicep [Idempotent/ Repeatable Results](https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/overview?tabs=bicep#benefits-of-bicep)
 
 Command:
 
@@ -99,6 +103,7 @@ Output:
 - No changes to existing resources
 
 Key Points:
+
 - Incremental resource updates (as supported by the resource provider)
 
 ***
@@ -164,21 +169,43 @@ Output:
 
 ***
 
-## Exercise E: Modules to provision NIC
+## Exercise E: Use modules to provision NIC and Virtual Machine
 
-Bicep File: **Exercises/lab.bicep**
+Bicep Files:
 
-Steps:
+- Exercises/lab.bicep
+- Exercises/Modules/4.linuxvm.bicep
 
-1. Complete the Bicep code to reference the NSG resource created in the previous exercise (use the [existing](https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/existing-resource) keyword and the NSG resource name)
-2. Add Bicep code to use the NIC resource defined in the NIC module
+Steps (Modules/4.linuxvm.bicep):
+
+1. Familiarise yourself with the virtual machine resource template used in the module
+2. For the virtualmachine resource osProfile properties, set the linuxConfiguration to use password authentication scheme
+
+Steps (lab.bicep):
+
+NIC provisioning:
+
+3. Complete the Bicep code to reference the NSG resource created in the previous exercise (use the [existing](https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/existing-resource) keyword and the NSG resource name)
+
+4. Add Bicep code to use the NIC resource defined in the NIC module
 ('Modules/3.nic.bicep')
-3. Set the module properties nsgId and subnetId to the corresponding ids (existing resource implicit references)
-4. Observe the use of [uniqueString()](https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/bicep-functions-string#uniquestring) bicep function to create a deployment name
-5. Observe use of module name [string interpolation](https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/data-types#strings) to build strings from vars, params, resource properties and other functions
+
+5. Set the module properties nsgId and subnetId to the corresponding ids (existing resource implicit references)
+
+VM:
+
+6. Add a new parameter called 'adminPassword' of type [securestring](https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/data-types#secure-strings-and-objects) (Do not
+set any default value)
+
+7. Add bicep code to create linux VM using the module ./Modules/4.linuxvm.bicep and pass the requisite params
 
 References:
+
 - [Bicep Modules](https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/modules)
+
+- [NIC Bicep template format](https://docs.microsoft.com/en-us/azure/templates/microsoft.network/networkinterfaces?tabs=bicep#template-format)
+- [Virtual Machine Bicep template format](https://docs.microsoft.com/en-us/azure/templates/microsoft.compute/virtualmachines?tabs=bicep#template-format)
+
 - [Resource dependencies in Bicep](https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/resource-dependencies)
 - Bicep [Datatypes](https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/data-types), [Functions](https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/bicep-functions) and [Operators](https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/operators)
 
@@ -186,10 +213,41 @@ Command:
 
     az deployment group create --resource-group testrg --template-file  .\lab.bicep
 
-Output:
+_You will be prompted to enter adminPassword. Provide a suitable strong pasword per Azure guidelines_
+
+Outputs:
 
 - NIC resource is created and associated with the referenced NSG and Subnet
+- Linux VM is provisioned with the profile configurations set in the bicep modules and the parameters passed
+
+Key Points:
+
+- Use of modules to create structured and reusable bicep templates
+- @Secure attribute to accept protected parameters (commandline / parameter file/ pipeline vars)
+- Virtual machine template and dependencies (subnet, vnet, nic, nsg)
 
 ***
 
+## Exercise F: Bastion host and associated public IP
 
+Bicep File: **Exercises/Modules/5.publicIP.bicep**
+Bicep File: **Exercises/Modules/6.bastion.bicep**
+
+Steps:
+
+1. Run the command to provision publicIP from the module
+
+2. Run the command to provision Bastion host from the module
+
+Command:
+
+    az deployment group create --resource-group testrg --template-file  .\5.publicIP.bicep
+
+    az deployment group create --resource-group testrg --template-file  .\6.bastion.bicep
+
+Output:
+
+- Bastion resource is created with the public IP associated
+- Connect the linux vm with bastion and the provided password
+
+***

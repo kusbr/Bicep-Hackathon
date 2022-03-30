@@ -16,6 +16,11 @@ param adminPassword string
 @description('Azure region where the resources should be provisioned')
 param location string = resourceGroup().location
 
+// Existing VNET reference
+resource vnet 'Microsoft.Network/virtualNetworks@2021-05-01' existing = {
+  name:'${resourceGroup().name}-vnet' 
+}
+
 // Existing main subnet
 resource mainSubnet 'Microsoft.Network/virtualnetworks/subnets@2015-06-15' existing = {
   name: '${resourceGroup().name}-vnet/mainSubnet'
@@ -58,11 +63,6 @@ module bastionPubIp './Modules/5.publicIP.bicep' = {
     location: location
     sku: 'Standard'
   }
-}
-
-// Existing VNET reference
-resource vnet 'Microsoft.Network/virtualNetworks@2021-05-01' existing = {
-  name:'${resourceGroup().name}-vnet' 
 }
 
 // Bastion Host
