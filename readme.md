@@ -15,7 +15,7 @@ In order to complete the exercises in this lab, you need one of these environmen
 
 - Host with bicep environment and VisualStudio Code
 - Cloud Shell
-- Azure Pipelines (not recommended for this lab but surely recommended for projects)
+- Azure Pipelines (not recommended for this lab but must for projects)
 
 ### Host pre-requisites:
 
